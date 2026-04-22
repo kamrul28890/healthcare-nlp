@@ -6,7 +6,7 @@ This repository implements a runnable baseline for **adverse drug reaction (ADR)
 - Classical baselines (TF-IDF + Logistic Regression, SVM, Random Forest, Naive Bayes)
 - 70/15/15 split and comparative evaluation
 - Domain transfer evaluation (train one domain, test the other)
-- Transformer fine-tuning starter plan (stub)
+- BioClinicalBERT fine-tuning pipeline
 - Real benchmark dataset support: ADE Corpus V2 (Hugging Face)
 
 ## 1) Setup
@@ -38,14 +38,28 @@ Artifacts:
 - `outputs/best_model_<model>.joblib`
 - `outputs/domain_transfer_results.json`
 
-## 4) Transformer Plan
+## 4) Fine-Tune BioClinicalBERT
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m healthcare_nlp.cli run-bioclinicalbert --data data/processed/ade_corpus_v2_classification.csv --output outputs --epochs 1 --train-sample-size 5000 --eval-sample-size 2000
+```
+
+## 5) Write Final Report
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m healthcare_nlp.cli write-report --baseline-summary reports/ade_corpus_v2_baseline_summary.json --bioclinicalbert-results outputs/bioclinicalbert_results.json --output reports/final_project_report.md
+```
+
+## 6) Transformer Plan
 
 ```powershell
 $env:PYTHONPATH = "src"
 python -m healthcare_nlp.cli transformer-plan
 ```
 
-## 5) Dataset Format
+## 7) Dataset Format
 
 CSV columns required:
 

@@ -12,6 +12,8 @@ from healthcare_nlp.dataset_sources import prepare_ade_corpus_v2
 from healthcare_nlp.evaluation import evaluate_binary_model
 from healthcare_nlp.models import build_model_specs, tune_model
 from healthcare_nlp.preprocess import preprocess_series
+from healthcare_nlp.reporting import write_project_report
+from healthcare_nlp.transformer_training import finetune_bioclinicalbert
 from healthcare_nlp.transformers_stub import get_transformer_plan
 
 
@@ -157,6 +159,45 @@ def build_parser() -> argparse.ArgumentParser:
     transformer = subparsers.add_parser("transformer-plan", help="Show transformer fine-tuning plan")
     transformer.add_argument("--model-name", default="emilyalsentzer/Bio_ClinicalBERT")
 
+    run_bioclinicalbert = subparsers.add_parser(
+        "run-bioclinicalbert",
+        help="Fine-tune Bio_ClinicalBERT for ADR classification",
+    )
+    run_bioclinicalbert.add_argument(
+        "--data",
+        default="data/processed/ade_corpus_v2_classification.csv",
+        help="Path to CSV dataset",
+    )
+    run_bioclinicalbert.add_argument("--output", default="outputs", help="Output directory")
+    run_bioclinicalbert.add_argument("--epochs", type=int, default=1)
+    run_bioclinicalbert.add_argument("--lr", type=float, default=2e-5)
+    run_bioclinicalbert.add_argument("--train-batch-size", type=int, default=8)
+    run_bioclinicalbert.add_argument("--eval-batch-size", type=int, default=16)
+    run_bioclinicalbert.add_argument("--max-length", type=int, default=256)
+    run_bioclinicalbert.add_argument("--train-sample-size", type=int, default=5000)
+    run_bioclinicalbert.add_argument("--eval-sample-size", type=int, default=2000)
+    run_bioclinicalbert.add_argument("--seed", type=int, default=42)
+
+    write_report = subparsers.add_parser(
+        "write-report",
+        help="Write combined project report from baseline and BioClinicalBERT results",
+    )
+    write_report.add_argument(
+        "--baseline-summary",
+        default="reports/ade_corpus_v2_baseline_summary.json",
+        help="Path to baseline summary JSON",
+    )
+    write_report.add_argument(
+        "--bioclinicalbert-results",
+        default="outputs/bioclinicalbert_results.json",
+        help="Path to BioClinicalBERT result JSON",
+    )
+    write_report.add_argument(
+        "--output",
+        default="reports/final_project_report.md",
+        help="Output markdown report path",
+    )
+
     return parser
 
 
@@ -175,6 +216,27 @@ def main() -> None:
         run_baseline(data_path=args.data, output_dir=args.output, random_state=args.seed)
     elif args.command == "transformer-plan":
         print(get_transformer_plan())
+    elif args.command == "run-bioclinicalbert":
+        result = finetune_bioclinicalbert(
+            data_path=args.data,
+            output_dir=args.output,
+            epochs=args.epochs,
+            learning_rate=args.lr,
+            train_batch_size=args.train_batch_size,
+            eval_batch_size=args.eval_batch_size,
+            max_length=args.max_length,
+            train_sample_size=args.train_sample_size,
+            eval_sample_size=args.eval_sample_size,
+            seed=args.seed,
+        )
+        print(json.dumps(result, indent=2))
+    elif args.command == "write-report":
+        report_path = write_project_report(
+            baseline_summary_path=args.baseline_summary,
+            bioclinicalbert_result_path=args.bioclinicalbert_results,
+            output_report_path=args.output,
+        )
+        print(f"Report written: {report_path}")
     else:
         raise ValueError(f"Unknown command: {args.command}")
 

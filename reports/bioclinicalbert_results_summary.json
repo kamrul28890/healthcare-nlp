@@ -1,0 +1,34 @@
+{
+  "model_name": "emilyalsentzer/Bio_ClinicalBERT",
+  "data_path": "data/processed/ade_corpus_v2_classification.csv",
+  "train_rows": 3000,
+  "val_rows": 1000,
+  "test_rows": 1000,
+  "train_sample_size": 3000,
+  "eval_sample_size": 1000,
+  "epochs": 1,
+  "learning_rate": 2e-05,
+  "max_length": 256,
+  "train_batch_size": 8,
+  "eval_batch_size": 16,
+  "validation_metrics": {
+    "accuracy": 0.898,
+    "precision": 0.8221476510067114,
+    "recall": 0.8333333333333334,
+    "f1": 0.8277027027027027,
+    "roc_auc": 0.9527904646277775,
+    "pr_auc": 0.8940257279107026
+  },
+  "test_metrics": {
+    "accuracy": 0.9,
+    "precision": 0.8115942028985508,
+    "recall": 0.8235294117647058,
+    "f1": 0.8175182481751825,
+    "roc_auc": 0.9535694085326438,
+    "pr_auc": 0.8952501678888117
+  },
+  "artifacts": {
+    "model_dir": "outputs\\bioclinicalbert_model",
+    "result_json": "outputs\\bioclinicalbert_results.json"
+  }
+}

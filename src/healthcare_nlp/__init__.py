@@ -6,5 +6,7 @@ __all__ = [
     "preprocess",
     "models",
     "evaluation",
+    "reporting",
+    "transformer_training",
     "transformers_stub",
 ]
