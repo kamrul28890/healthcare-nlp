@@ -23,3 +23,5 @@ reports/*.aux
 reports/*.log
 reports/*.out
 reports/*.toc
+reports/final_project_report.pdf
+reports/final_project_report.tex
