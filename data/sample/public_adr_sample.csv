@@ -1,0 +1,17 @@
+text,label,domain
+Patient developed severe rash after taking amoxicillin,1,clinical
+No side effects were observed during metformin therapy,0,clinical
+Nausea and dizziness started two days after ibuprofen,1,clinical
+Medication tolerated well with no adverse reactions,0,clinical
+After starting lisinopril the patient reported persistent cough,1,clinical
+No allergic reaction noted after penicillin challenge,0,clinical
+Mild headache reported but unrelated to the prescribed statin,0,clinical
+Developed facial swelling shortly after first dose of antibiotic,1,clinical
+Took this pain med and now I feel super dizzy and sick,1,social
+This drug works great for me no weird effects at all,0,social
+Started antidepressant and got terrible insomnia and nausea,1,social
+No issues from this medication so far feeling normal,0,social
+My skin broke out badly after using that prescription cream,1,social
+Been on this tablet for weeks and no side effects here,0,social
+Heart racing and shaking after taking new anxiety meds,1,social
+Doctor changed dose and symptoms improved no adverse effects now,0,social
