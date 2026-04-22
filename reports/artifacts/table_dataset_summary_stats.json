@@ -1,0 +1,14 @@
+{
+  "rows": 23516,
+  "adr_rows": 6821,
+  "no_adr_rows": 16695,
+  "adr_ratio": 0.29005783296478993,
+  "mean_words": 18.53776152406872,
+  "median_words": 17.0,
+  "std_words": 9.07188076035815,
+  "q1_words": 12.0,
+  "q3_words": 23.0,
+  "max_words": 135,
+  "mean_words_adr": 20.559008942970237,
+  "mean_words_no_adr": 17.71194968553459
+}

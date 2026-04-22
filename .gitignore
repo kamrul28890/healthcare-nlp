@@ -17,3 +17,8 @@ outputs/*
 .mypy_cache/
 .vscode/
 .DS_Store
+
+# LaTeX build byproducts
+reports/*.aux
+reports/*.log
+reports/*.out
