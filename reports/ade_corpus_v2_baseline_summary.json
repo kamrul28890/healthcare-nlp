@@ -1,0 +1,59 @@
+{
+  "dataset": "ade-benchmark-corpus/ade_corpus_v2",
+  "config": "Ade_corpus_v2_classification",
+  "prepared_csv": "data/processed/ade_corpus_v2_classification.csv",
+  "dataset_size": 23516,
+  "split_sizes": {
+    "train": 16461,
+    "val": 3527,
+    "test": 3528
+  },
+  "selected_model": "linear_svm",
+  "final_test_metrics": {
+    "accuracy": 0.9058956916099773,
+    "precision": 0.8126696832579186,
+    "recall": 0.8778103616813294,
+    "f1": 0.8439849624060151,
+    "roc_auc": 0.9599873566649691,
+    "pr_auc": 0.9200761555782395,
+    "confusion_matrix": [[2298, 207], [125, 898]]
+  },
+  "leaderboard": [
+    {
+      "model": "linear_svm",
+      "val_f1": 0.8397435897435898,
+      "test_f1": 0.8417132216014898,
+      "test_precision": 0.8035555555555556,
+      "test_recall": 0.8836754643206256,
+      "test_roc_auc": 0.958140805388246,
+      "test_pr_auc": 0.9142388845157718
+    },
+    {
+      "model": "logistic_regression",
+      "val_f1": 0.8165467625899281,
+      "test_f1": 0.8101149425287356,
+      "test_precision": 0.7647569444444444,
+      "test_recall": 0.8611925708699902,
+      "test_roc_auc": 0.9461827078979871,
+      "test_pr_auc": 0.8804448758279715
+    },
+    {
+      "model": "random_forest",
+      "val_f1": 0.788546255506608,
+      "test_f1": 0.7767416346681295,
+      "test_precision": 0.885,
+      "test_recall": 0.6920821114369502,
+      "test_roc_auc": 0.9391875096337139,
+      "test_pr_auc": 0.8975881236533817
+    },
+    {
+      "model": "naive_bayes",
+      "val_f1": 0.7536231884057971,
+      "test_f1": 0.7439231204070096,
+      "test_precision": 0.8820375335120644,
+      "test_recall": 0.6432062561094819,
+      "test_roc_auc": 0.9231761306321862,
+      "test_pr_auc": 0.8710445734451615
+    }
+  ]
+}
