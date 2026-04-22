@@ -2,6 +2,7 @@
 
 __all__ = [
     "data",
+    "dataset_sources",
     "preprocess",
     "models",
     "evaluation",

@@ -7,6 +7,7 @@ This repository implements a runnable baseline for **adverse drug reaction (ADR)
 - 70/15/15 split and comparative evaluation
 - Domain transfer evaluation (train one domain, test the other)
 - Transformer fine-tuning starter plan (stub)
+- Real benchmark dataset support: ADE Corpus V2 (Hugging Face)
 
 ## 1) Setup
 
@@ -16,11 +17,18 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## 2) Run Baseline
+## 2) Prepare Real Dataset (ADE Corpus V2)
 
 ```powershell
 $env:PYTHONPATH = "src"
-python -m healthcare_nlp.cli run-baseline --data data/sample/public_adr_sample.csv --output outputs
+python -m healthcare_nlp.cli prepare-ade-dataset --output data/processed/ade_corpus_v2_classification.csv
+```
+
+## 3) Run Baseline
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m healthcare_nlp.cli run-baseline --data data/processed/ade_corpus_v2_classification.csv --output outputs
 ```
 
 Artifacts:
@@ -30,14 +38,14 @@ Artifacts:
 - `outputs/best_model_<model>.joblib`
 - `outputs/domain_transfer_results.json`
 
-## 3) Transformer Plan
+## 4) Transformer Plan
 
 ```powershell
 $env:PYTHONPATH = "src"
 python -m healthcare_nlp.cli transformer-plan
 ```
 
-## 4) Dataset Format
+## 5) Dataset Format
 
 CSV columns required:
 
@@ -47,6 +55,6 @@ CSV columns required:
 
 ## Notes
 
-- This baseline uses a public sample dataset for immediate reproducibility.
-- Replace `data/sample/public_adr_sample.csv` with your real dataset when available.
+- The default workflow now uses ADE Corpus V2, a widely used ADR benchmark.
+- A small sample dataset is still included at `data/sample/public_adr_sample.csv` for smoke tests.
 - SHAP/LIME dependencies are included for future explainability integration.

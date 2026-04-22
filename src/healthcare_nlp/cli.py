@@ -8,6 +8,7 @@ import joblib
 import pandas as pd
 
 from healthcare_nlp.data import load_dataset, split_train_val_test
+from healthcare_nlp.dataset_sources import prepare_ade_corpus_v2
 from healthcare_nlp.evaluation import evaluate_binary_model
 from healthcare_nlp.models import build_model_specs, tune_model
 from healthcare_nlp.preprocess import preprocess_series
@@ -127,8 +128,29 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Healthcare NLP ADR classification")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
+    prepare_ade = subparsers.add_parser(
+        "prepare-ade-dataset",
+        help="Download and prepare ADE Corpus V2 classification dataset",
+    )
+    prepare_ade.add_argument(
+        "--output",
+        default="data/processed/ade_corpus_v2_classification.csv",
+        help="Output CSV path for prepared ADE dataset",
+    )
+    prepare_ade.add_argument(
+        "--sample-size",
+        type=int,
+        default=None,
+        help="Optional row count sample for quick experiments",
+    )
+    prepare_ade.add_argument("--seed", type=int, default=42, help="Random seed")
+
     baseline = subparsers.add_parser("run-baseline", help="Run baseline classical ML pipeline")
-    baseline.add_argument("--data", default="data/sample/public_adr_sample.csv", help="Path to CSV dataset")
+    baseline.add_argument(
+        "--data",
+        default="data/processed/ade_corpus_v2_classification.csv",
+        help="Path to CSV dataset",
+    )
     baseline.add_argument("--output", default="outputs", help="Output directory")
     baseline.add_argument("--seed", type=int, default=42, help="Random seed")
 
@@ -142,7 +164,14 @@ def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
 
-    if args.command == "run-baseline":
+    if args.command == "prepare-ade-dataset":
+        summary = prepare_ade_corpus_v2(
+            output_csv_path=args.output,
+            sample_size=args.sample_size,
+            random_state=args.seed,
+        )
+        print(json.dumps(summary, indent=2))
+    elif args.command == "run-baseline":
         run_baseline(data_path=args.data, output_dir=args.output, random_state=args.seed)
     elif args.command == "transformer-plan":
         print(get_transformer_plan())
